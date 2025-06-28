@@ -131,7 +131,7 @@ const BranchList = ({
                   ></i>
                 </div>
                 <span
-                  className={`text-sm font-medium ${selectedBranch === branch.name ? 'text-primary' : 'text-gray-700'}`}
+                  className={`text-sm font-medium ${selectedBranch === branch.name ? 'text-primary' : 'text-gray-700'} max-w-[120px] whitespace-nowrap overflow-hidden text-overflow-ellipsis`}
                 >
                   {branch.name}
                 </span>

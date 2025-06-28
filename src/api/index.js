@@ -12,7 +12,7 @@ const simulateDelay = (ms = 100) => {
 export const mockProjects = [
   {
     id: 'webapp-frontend',
-    name: 'WebApp 前端',
+    name: 'WebApp 前端11111111111111111111111111111111111',
     type: '前端',
     status: '活跃',
     branches: 12,
@@ -243,7 +243,7 @@ export const mockBranches = {
   'api-service': [
     { name: 'main', status: '活跃', versions: 12, favorite: true },
     { name: 'develop', status: '活跃', versions: 8, favorite: true },
-    { name: 'feature/auth', status: '开发中', versions: 5, favorite: true },
+    { name: 'feature/auth111111111111111111111111111111111111111111111', status: '开发中', versions: 5, favorite: true },
     { name: 'bugfix/501', status: '待审核', versions: 3, favorite: false },
     // 其他分支...
   ],

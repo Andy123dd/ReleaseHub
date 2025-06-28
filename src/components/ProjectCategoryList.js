@@ -190,7 +190,7 @@ const ProjectCategoryList = ({
                       <div className={`w-6 h-6 rounded ${selectedProjectId === project.id ? 'bg-primary/10' : 'bg-gray-100'} flex items-center justify-center mr-2`}>
                         <i className={`fa ${project.icon} ${selectedProjectId === project.id ? 'text-primary' : 'text-gray-500'} text-xs`}></i>
                       </div>
-                      <span className={`text-sm font-medium ${selectedProjectId === project.id ? 'text-primary' : 'text-gray-700'}`}>{project.name}</span>
+                      <span className={`text-sm font-medium ${selectedProjectId === project.id ? 'text-primary' : 'text-gray-700'} max-w-[180px] whitespace-nowrap overflow-hidden text-overflow-ellipsis`}>{project.name}</span>
                     </div>
                     <span className="text-xs text-gray-500">{project.branches} 分支</span>
                   </div>
