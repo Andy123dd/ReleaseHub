@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { statusStyles } from '../api';
 
@@ -17,18 +17,42 @@ const BranchList = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [filterMenuOpen, setFilterMenuOpen] = useState(false);
   const [moreMenuOpen, setMoreMenuOpen] = useState(false);
+  const [sortBy, setSortBy] = useState('name'); // 排序字段: name, versions
+  const [sortOrder, setSortOrder] = useState('asc'); // 排序顺序: asc, desc
 
   // 应用搜索过滤
   const filteredBranches = branches.filter(branch => 
     branch.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // 应用排序
+  const sortedBranches = useMemo(() => {
+    return [...filteredBranches].sort((a, b) => {
+      if (sortBy === 'name') {
+        return sortOrder === 'asc' 
+          ? a.name.localeCompare(b.name) 
+          : b.name.localeCompare(a.name);
+      } else if (sortBy === 'versions') {
+        return sortOrder === 'asc' 
+          ? a.versions - b.versions 
+          : b.versions - a.versions;
+      }
+      return 0;
+    });
+  }, [filteredBranches, sortBy, sortOrder]);
+
+  // 获取排序图标
+  const getSortIcon = (field) => {
+    if (sortBy !== field) return null;
+    return sortOrder === 'asc' ? 'fa-sort-asc' : 'fa-sort-desc';
+  };
+
   return (
     <div className="w-full md:w-64 lg:w-72 bg-white border-r border-gray-200 flex flex-col overflow-hidden">
       <div className="p-3 border-b border-gray-100 flex items-center justify-between">
         <h3 className="text-sm font-medium text-gray-700">分支列表</h3>
         <div className="flex items-center space-x-2">
-          {/* 过滤器按钮 */}
+          {/* 过滤器和排序按钮 */}
           <div className="relative">
             <button 
               className="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-500"
@@ -36,7 +60,7 @@ const BranchList = ({
             >
               <i className="fa fa-filter text-xs"></i>
             </button>
-            {/* 过滤器下拉菜单 */}
+            {/* 过滤器和排序下拉菜单 */}
             {filterMenuOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-20">
                 <div className="p-2 border-b border-gray-100 font-medium text-sm">分支过滤</div>
@@ -76,6 +100,36 @@ const BranchList = ({
                     }}
                   >
                     已关闭分支
+                  </button>
+                </div>
+                <div className="border-t border-gray-100 my-1"></div>
+                <div className="p-2 font-medium text-sm text-gray-500">排序方式</div>
+                <div className="py-1">
+                  <button 
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => {
+                      setSortBy('name');
+                      setSortOrder(sortBy === 'name' && sortOrder === 'asc' ? 'desc' : 'asc');
+                      setFilterMenuOpen(false);
+                    }}
+                  >
+                    <span className="flex items-center justify-between w-full">
+                      <span>名称</span>
+                      <i className={`fa ${getSortIcon('name')} text-xs`}></i>
+                    </span>
+                  </button>
+                  <button 
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => {
+                      setSortBy('versions');
+                      setSortOrder(sortBy === 'versions' && sortOrder === 'asc' ? 'desc' : 'asc');
+                      setFilterMenuOpen(false);
+                    }}
+                  >
+                    <span className="flex items-center justify-between w-full">
+                      <span>版本数量</span>
+                      <i className={`fa ${getSortIcon('versions')} text-xs`}></i>
+                    </span>
                   </button>
                 </div>
               </div>
@@ -151,7 +205,7 @@ const BranchList = ({
         </div>
       </div>
 
-      {filteredBranches.length === 0 ? (
+      {sortedBranches.length === 0 ? (
         <div className="p-4 text-center text-gray-500 text-sm">
           <div className="mb-2">
             <i className="fa fa-code-fork text-primary text-3xl"></i>
@@ -160,7 +214,7 @@ const BranchList = ({
         </div>
       ) : (
         <div className="overflow-y-auto scrollbar-hide flex-1">
-          {filteredBranches.map((branch) => (
+          {sortedBranches.map((branch) => (
             <div
               key={branch.name}
               className={`p-3 flex items-center justify-between ${selectedBranch === branch.name ? 'bg-primary/5 border-l-2 border-primary' : 'hover:bg-gray-50'} cursor-pointer hover-scale`}
