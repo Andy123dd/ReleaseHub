@@ -56,7 +56,96 @@ export const mockProjects = [
     favorite: true,
     icon: 'fa-bar-chart'
   },
-  // 其他项目...
+  {
+    id: 'database-design',
+    name: '数据库设计',
+    type: '后端',
+    status: '活跃',
+    branches: 5,
+    favorite: false,
+    icon: 'fa-database'
+  },
+  {
+    id: 'mobile-app',
+    name: '移动应用',
+    type: '前端',
+    status: '活跃',
+    branches: 8,
+    favorite: false,
+    icon: 'fa-mobile'
+  },
+  {
+    id: 'cicd-pipeline',
+    name: 'CI/CD 流水线',
+    type: '运维',
+    status: '活跃',
+    branches: 6,
+    favorite: false,
+    icon: 'fa-cogs'
+  },
+  {
+    id: 'security-audit',
+    name: '安全审计',
+    type: '安全',
+    status: '待处理',
+    branches: 3,
+    favorite: false,
+    icon: 'fa-lock'
+  },
+  {
+    id: 'performance-optimization',
+    name: '性能优化',
+    type: '后端',
+    status: '待处理',
+    branches: 4,
+    favorite: false,
+    icon: 'fa-tachometer-alt'
+  },
+  {
+    id: 'user-authentication',
+    name: '用户认证',
+    type: '后端',
+    status: '待处理',
+    branches: 3,
+    favorite: false,
+    icon: 'fa-user-lock'
+  },
+  {
+    id: 'legacy-api',
+    name: '遗留 API',
+    type: '后端',
+    status: '已归档',
+    branches: 2,
+    favorite: false,
+    icon: 'fa-archive'
+  },
+  {
+    id: 'deprecated-module',
+    name: '已弃用模块',
+    type: '后端',
+    status: '已归档',
+    branches: 1,
+    favorite: false,
+    icon: 'fa-trash-alt'
+  },
+  {
+    id: 'microservice-refactor',
+    name: '微服务重构',
+    type: '后端',
+    status: '已暂停',
+    branches: 7,
+    favorite: false,
+    icon: 'fa-sync-alt'
+  },
+  {
+    id: 'data-analysis-platform',
+    name: '数据分析平台',
+    type: '后端',
+    status: '已暂停',
+    branches: 5,
+    favorite: false,
+    icon: 'fa-chart-line'
+  }
 ];
 
 // 项目分支数据
@@ -81,9 +170,16 @@ export const mockBranches = {
   ],
   'data-visualization': [
     { name: 'main', status: '计划中', versions: 0, favorite: false },
-    { name: 'prototype', status: '开发中', versions: 2, favorite: true }
+    { name: 'prototype', status: '开发中', versions: 2, favorite: true },
+    { name: 'feature/dashboard', status: '开发中', versions: 1, favorite: false },
+    { name: 'bugfix/layout', status: '待审核', versions: 1, favorite: false }
   ],
-  // 其他项目分支...
+  'webapp-frontend': [
+    { name: 'main', status: '活跃', versions: 15, favorite: true },
+    { name: 'develop', status: '活跃', versions: 10, favorite: true },
+    { name: 'feature/theme', status: '开发中', versions: 4, favorite: true },
+    { name: 'bugfix/responsive', status: '待审核', versions: 2, favorite: false }
+  ]
 };
 
 // 分支版本数据
@@ -117,6 +213,136 @@ export const mockVersions = {
     // 其他分支版本...
   }
 };
+
+// 补充分支版本数据
+Object.assign(mockVersions, {
+  'api-service': {
+    'develop': [
+      {
+        id: 'v0.8.0',
+        commit: 'c3d4e5f6',
+        type: '功能',
+        message: '添加API文档生成功能',
+        date: '2023-06-20 11:30',
+        author: { name: '王强', avatar: 'https://picsum.photos/id/1019/200/200' }
+      },
+      {
+        id: 'v0.7.0',
+        commit: 'd4e5f6g7',
+        type: '优化',
+        message: '优化API响应速度',
+        date: '2023-06-18 14:45',
+        author: { name: '刘芳', avatar: 'https://picsum.photos/id/1020/200/200' }
+      }
+    ],
+    'feature/auth': [
+      {
+        id: 'v0.5.0',
+        commit: 'e5f6g7h8',
+        type: '功能',
+        message: '实现JWT认证',
+        date: '2023-06-15 09:20',
+        author: { name: '陈杰', avatar: 'https://picsum.photos/id/1021/200/200' }
+      }
+    ]
+  },
+  'automation-test': {
+    'feature/new-test': [
+      {
+        id: 'v0.3.0',
+        commit: 'f6g7h8i9',
+        type: '功能',
+        message: '添加接口测试用例',
+        date: '2023-06-12 16:10',
+        author: { name: '周婷', avatar: 'https://picsum.photos/id/1022/200/200' }
+      }
+    ]
+  },
+  'performance-test': {
+    'optimize/load-time': [
+      {
+        id: 'v0.2.0',
+        commit: 'g7h8i9j0',
+        type: '优化',
+        message: '优化加载时间测试',
+        date: '2023-06-09 13:55',
+        author: { name: '吴刚', avatar: 'https://picsum.photos/id/1023/200/200' }
+      }
+    ]
+  },
+  'data-visualization': {
+    'feature/dashboard': [
+      {
+        id: 'v0.1.0',
+        commit: 'h8i9j0k1',
+        type: '原型',
+        message: '创建仪表盘原型',
+        date: '2023-06-07 15:30',
+        author: { name: '郑晓', avatar: 'https://picsum.photos/id/1024/200/200' }
+      }
+    ],
+    'bugfix/layout': [
+      {
+        id: 'v0.0.1',
+        commit: 'i9j0k1l2',
+        type: '修复',
+        message: '修复布局问题',
+        date: '2023-06-06 10:45',
+        author: { name: '王敏', avatar: 'https://picsum.photos/id/1025/200/200' }
+      }
+    ]
+  },
+  'webapp-frontend': {
+    'main': [
+      {
+        id: 'v2.0.0',
+        commit: 'j0k1l2m3',
+        type: '发布',
+        message: 'WebApp前端2.0版本发布',
+        date: '2023-06-28 14:00',
+        author: { name: '李阳', avatar: 'https://picsum.photos/id/1026/200/200' }
+      },
+      {
+        id: 'v1.9.0',
+        commit: 'k1l2m3n4',
+        type: '功能',
+        message: '添加主题切换功能',
+        date: '2023-06-26 11:20',
+        author: { name: '张悦', avatar: 'https://picsum.photos/id/1027/200/200' }
+      }
+    ],
+    'develop': [
+      {
+        id: 'v1.8.0',
+        commit: 'l2m3n4o5',
+        type: '功能',
+        message: '实现响应式布局',
+        date: '2023-06-24 15:10',
+        author: { name: '刘鹏', avatar: 'https://picsum.photos/id/1028/200/200' }
+      }
+    ],
+    'feature/theme': [
+      {
+        id: 'v1.5.0',
+        commit: 'm3n4o5p6',
+        type: '功能',
+        message: '开发新主题样式',
+        date: '2023-06-21 09:30',
+        author: { name: '陈晨', avatar: 'https://picsum.photos/id/1029/200/200' }
+      }
+    ],
+    'bugfix/responsive': [
+      {
+        id: 'v1.0.1',
+        commit: 'n4o5p6q7',
+        type: '修复',
+        message: '修复响应式布局问题',
+        date: '2023-06-19 14:20',
+        author: { name: '周伟', avatar: 'https://picsum.photos/id/1030/200/200' }
+      }
+    ]
+  }
+});
 
 // 项目状态样式映射
 export const statusStyles = {
@@ -220,4 +446,4 @@ export const fetchBranchVersions = async (projectId, branchName) => {
     console.error('Error fetching versions:', error);
     throw error;
   }
-};    
+};
