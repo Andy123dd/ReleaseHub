@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BranchList from "./BranchList";
 import VersionHistory from "./VersionHistory";
-import { fetchProjectBranches, fetchBranchVersions } from "../api";
+import { fetchProjectBranches, fetchBranchVersions, toggleFavorite } from "../api";
 
 const BranchAndVersionPanel = ({ selectedProject }) => {
   const [branches, setBranches] = useState([]);
@@ -52,9 +52,15 @@ const BranchAndVersionPanel = ({ selectedProject }) => {
     setSelectedBranch(branchName);
   };
 
-  const onToggleFavorite = (branchName) => {
-    // 可根据需求实现收藏功能
-    console.log(`切换分支 ${branchName} 的收藏状态`);
+  const onToggleFavorite = (projectId, branchName) => {
+    toggleFavorite(projectId, branchName);
+    setBranches(prevBranches => 
+      prevBranches.map(branch => 
+        branch.name === branchName 
+          ? { ...branch, favorite: !branch.favorite } 
+          : branch
+      )
+    );
   };
   return (
     <section className="flex-1 flex flex-col overflow-hidden bg-gray-50">

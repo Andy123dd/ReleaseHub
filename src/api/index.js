@@ -381,3 +381,13 @@ export const fetchBranchVersions = async (projectId, branchName) => {
     throw error;
   }
 };
+
+// 切换分支收藏状态
+ export const toggleFavorite = (projectId, branchName) => {
+   if (mockBranches[projectId]) {
+     const branch = mockBranches[projectId].find(b => b.name === branchName);
+     if (branch) {
+       branch.favorite = !branch.favorite;
+     }
+   }
+ };
