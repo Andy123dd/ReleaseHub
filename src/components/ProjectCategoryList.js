@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Collapse, Dropdown, Menu, Button, Badge, Tag, Space, List, Avatar } from 'antd';
+import { SortAscendingOutlined, CaretDownOutlined, CaretRightOutlined, PlusSquareOutlined, MinusSquareOutlined } from '@ant-design/icons';
+
+const { Panel } = Collapse;
 
 const ProjectCategoryList = ({
   projects,
@@ -8,38 +12,8 @@ const ProjectCategoryList = ({
   statusStyles,
   onProjectSelect,
 }) => {
-  const [dropdownVisible, setDropdownVisible] = useState(false);
   const [sortBy, setSortBy] = useState('name-asc');
   const [sortedProjects, setSortedProjects] = useState({});
-  // 添加分类折叠状态管理
-  const [expandedCategories, setExpandedCategories] = useState({});
-
-  // 初始化所有分类为展开状态
-  useEffect(() => {
-    const initialExpanded = {};
-    Object.keys(projectCategories).forEach(category => {
-      initialExpanded[category] = true;
-    });
-    setExpandedCategories(initialExpanded);
-  }, [projectCategories]);
-
-  // 展开所有分类
-  const expandAll = () => {
-    const allExpanded = {};
-    Object.keys(projectCategories).forEach(category => {
-      allExpanded[category] = true;
-    });
-    setExpandedCategories(allExpanded);
-  };
-
-  // 折叠所有分类
-  const collapseAll = () => {
-    const allCollapsed = {};
-    Object.keys(projectCategories).forEach(category => {
-      allCollapsed[category] = false;
-    });
-    setExpandedCategories(allCollapsed);
-  };
 
   // 处理排序逻辑
   useEffect(() => {
@@ -78,128 +52,68 @@ const ProjectCategoryList = ({
     setSortedProjects(sorted);
   }, [projects, projectCategories, sortBy]);
 
-  // 点击外部关闭下拉菜单
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      const sortButton = document.getElementById('sortButton');
-      const sortDropdown = document.getElementById('sortDropdown');
-      if (sortButton && sortDropdown && !sortButton.contains(event.target) && !sortDropdown.contains(event.target)) {
-        setDropdownVisible(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  // 排序选项数据抽离
-  const sortOptions = [
-    { label: '按名称排序 (A-Z)', value: 'name-asc' },
-    { label: '按名称排序 (Z-A)', value: 'name-desc' },
-    { label: '最近更新', value: 'recent' },
-    { label: '最早更新', value: 'oldest' },
-    { label: '最多分支', value: 'most-branches' },
-    { label: '最少分支', value: 'least-branches' },
-  ];
-
-  // 切换分类展开/折叠状态
-  const toggleCategory = (category) => {
-    setExpandedCategories(prev => ({
-      ...prev,
-      [category]: !prev[category]
-    }));
-  };
+  // 排序选项菜单
+  const sortMenu = (
+    <Menu onClick={({ key }) => setSortBy(key)} selectedKeys={[sortBy]}>
+      <Menu.Item key="name-asc">按名称排序 (A-Z)</Menu.Item>
+      <Menu.Item key="name-desc">按名称排序 (Z-A)</Menu.Item>
+      <Menu.Item key="recent">最近更新</Menu.Item>
+      <Menu.Item key="oldest">最早更新</Menu.Item>
+      <Menu.Item key="most-branches">最多分支</Menu.Item>
+      <Menu.Item key="least-branches">最少分支</Menu.Item>
+    </Menu>
+  );
 
   return (
-    <div className="overflow-y-auto scrollbar-hide flex-1">
-      <div className="flex items-center justify-between p-3 border-b border-gray-100">
+    <div className="p-2">
+      <div className="flex items-center justify-between mb-3">
         <h3 className="text-sm font-medium text-gray-700">项目分类</h3>
-        <div className="flex space-x-2">
-          <button
-            onClick={expandAll}
-            className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded"
-          >
-            <i className="fa fa-plus-square-o mr-1"></i>展开全部
-          </button>
-          <button
-            onClick={collapseAll}
-            className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded"
-          >
-            <i className="fa fa-minus-square-o mr-1"></i>折叠全部
-          </button>
-          <div className="relative">
-            <button
-              id="sortButton"
-              onClick={() => setDropdownVisible(!dropdownVisible)}
-              className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded"
-            >
-              <i className="fa fa-sort mr-1"></i>排序
-            </button>
-            {dropdownVisible && (
-              <div
-                id="sortDropdown"
-                className="absolute right-0 mt-1 w-48 bg-white shadow-lg rounded-md z-10"
-              >
-                {sortOptions.map(option => (
-                  <div
-                    key={option.value}
-                    onClick={() => {
-                      setSortBy(option.value);
-                      setDropdownVisible(false);
-                    }}
-                    className={`px-4 py-2 text-xs cursor-pointer hover:bg-gray-100 ${sortBy === option.value ? 'bg-gray-100 font-medium' : ''}`}
-                  >
-                    {option.label}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
+        <Space size="small">
+          <Button icon={<PlusSquareOutlined />} size="small" onClick={() => {}}>展开全部</Button>
+          <Button icon={<MinusSquareOutlined />} size="small" onClick={() => {}}>折叠全部</Button>
+          <Dropdown overlay={sortMenu} trigger={['click']}>
+            <Button icon={<SortAscendingOutlined />} size="small">排序</Button>
+          </Dropdown>
+        </Space>
       </div>
-      {Object.entries(sortedProjects).map(([category, categoryProjects]) => {
-        if (categoryProjects.length === 0) return null;
 
-        return (
-          <div key={category} className="mb-2">
-            {/* 分类标题 - 添加点击事件和箭头方向切换 */}
-            <div 
-              className="px-3 py-2 flex items-center justify-between cursor-pointer bg-gray-50"
-              onClick={() => toggleCategory(category)}
+      <Collapse bordered defaultActiveKey={Object.keys(projectCategories || {})}>
+        {Object.entries(projectCategories || {}).map(([category, categoryProjects]) => {
+          if (categoryProjects.length === 0) return null;
+
+          return (
+            <Panel
+              header={(
+                <Space>
+                  {statusStyles[category] && <Tag color={statusStyles[category]?.bg?.replace('bg-', '') || 'default'} />}
+                  <span>{category}项目</span>
+                  <Badge count={categoryProjects.length} size="small" />
+                </Space>
+              )}
+              key={category}
+              extra={categoryProjects.length}
             >
-              <div className="flex items-center">
-                <div className={`w-3 h-3 rounded-full ${statusStyles[category].bg} mr-2`}></div>
-                <span className="text-xs font-medium text-gray-700">{category}项目</span>
-                <span className="ml-2 px-1.5 py-0.5 bg-gray-200 text-gray-700 text-xs rounded-full">{categoryProjects.length}</span>
-              </div>
-              <i className={`fa ${expandedCategories[category] ? 'fa-angle-down' : 'fa-angle-right'} text-gray-400 text-xs`}></i>
-            </div>
-
-            {/* 项目列表 - 根据展开状态显示/隐藏 */}
-            {expandedCategories[category] && (
-              <div className="pl-8">
-                {categoryProjects.map(project => (
-                  <div 
-                    key={project.id} 
-                    className={`p-2 flex items-center justify-between hover:bg-gray-50 rounded-lg cursor-pointer hover-scale ${selectedProjectId === project.id ? 'bg-primary/5 border-l-2 border-primary' : ''}`} 
+              <List
+                dataSource={categoryProjects}
+                renderItem={project => (
+                  <List.Item
+                    key={project.id}
                     onClick={() => onProjectSelect(project.id)}
+                    className={selectedProjectId === project.id ? 'bg-primary/5' : ''}
+                    hoverable
+                    actions={[<Badge count={project.branches} size="small" />]}
                   >
-                    <div className="flex items-center">
-                      <div className={`w-6 h-6 rounded ${selectedProjectId === project.id ? 'bg-primary/10' : 'bg-gray-100'} flex items-center justify-center mr-2`}>
-                        <i className={`fa ${project.icon} ${selectedProjectId === project.id ? 'text-primary' : 'text-gray-500'} text-xs`}></i>
-                      </div>
-                      <span className={`text-sm font-medium ${selectedProjectId === project.id ? 'text-primary' : 'text-gray-700'}`}>{project.name}</span>
-                    </div>
-                    <span className="text-xs text-gray-500">{project.branches} 分支</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        );
-      })}
+                    <List.Item.Meta
+                      avatar={<Avatar icon={<span className={`fa ${project.icon}`} />} />}
+                      title={project.name}
+                    />
+                  </List.Item>
+                )}
+              />
+            </Panel>
+          );
+        })}
+      </Collapse>
     </div>
   );
 };

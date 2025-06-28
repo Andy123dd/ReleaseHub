@@ -26,7 +26,7 @@ const FavoriteBranches = ({ favorites, onToggleFavorite }) => {
                   <div className="flex items-center mt-0.5">
                     <span className="text-xs text-gray-500">{project ? project.name : '未知项目'}</span>
                     <span className="mx-1.5 text-gray-300">•</span>
-                    <span className="text-xs text-green-600">{favorite.branch.status || '活跃'}</span>
+                    <span className="text-xs text-green-600">{favorite.branch?.status || '活跃'}</span>
                   </div>
                 </div>
               </div>
@@ -49,4 +49,4 @@ FavoriteBranches.propTypes = {
   onToggleFavorite: PropTypes.func.isRequired
 };
 
-export default FavoriteBranches;    
+export default FavoriteBranches;

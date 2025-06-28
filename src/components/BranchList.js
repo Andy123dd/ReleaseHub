@@ -1,6 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { List, Card, Button, Empty, Tag, Space, Typography } from 'antd';
+import {
+  StarOutlined,
+  StarFilled,
+  FilterOutlined,
+  MoreOutlined,
+  BranchesOutlined,
+} from '@ant-design/icons';
 import { statusStyles } from '../api';
+
+const { Text } = Typography;
 
 const BranchList = ({
   branches,
@@ -10,72 +20,108 @@ const BranchList = ({
   onToggleFavorite,
 }) => {
   return (
-    <div className="w-full md:w-64 lg:w-72 bg-white border-r border-gray-200 flex flex-col overflow-hidden">
-      <div className="p-3 border-b border-gray-100 flex items-center justify-between">
-        <h3 className="text-sm font-medium text-gray-700">分支列表</h3>
-        <div className="flex items-center space-x-2">
-          <div className="relative">
-            <button className="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-500">
-              <i className="fa fa-filter text-xs"></i>
-            </button>
-          </div>
-          <button className="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-500">
-            <i className="fa fa-ellipsis-v text-xs"></i>
-          </button>
-        </div>
+    <Card bordered={false} className="h-full">
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: 16,
+        }}
+      >
+        <Text strong>分支列表</Text>
+        <Space size="small">
+          <Button icon={<FilterOutlined />} size="small" type="text" />
+          <Button icon={<MoreOutlined />} size="small" type="text" />
+        </Space>
       </div>
 
       {branches.length === 0 ? (
-        <div className="p-4 text-center text-gray-500 text-sm">
-          <div className="mb-2">
-            <i className="fa fa-code-fork text-primary text-3xl"></i>
-          </div>
-          <p>该项目暂无分支</p>
-        </div>
+        <Empty
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+          description="该项目暂无分支"
+          icon={<BranchesOutlined style={{ fontSize: 24, color: '#1890ff' }} />}
+        />
       ) : (
-        <div className="overflow-y-auto scrollbar-hide flex-1">
-          {branches.map((branch) => (
-            <div
+        <List
+          dataSource={branches}
+          bordered
+          renderItem={(branch) => (
+            <List.Item
               key={branch.name}
-              className={`p-3 flex items-center justify-between ${selectedBranch === branch.name ? 'bg-primary/5 border-l-2 border-primary' : 'hover:bg-gray-50'} cursor-pointer hover-scale`}
               onClick={() => onBranchSelect(branch.name)}
-            >
-              <div className="flex items-center">
-                <div
-                  className={`w-5 h-5 rounded-full ${selectedBranch === branch.name ? 'bg-primary' : 'bg-gray-200'} flex items-center justify-center mr-2`}
-                >
-                  <i
-                    className={`fa fa-code-fork ${selectedBranch === branch.name ? 'text-white' : 'text-gray-600'} text-xs`}
-                  ></i>
-                </div>
-                <span
-                  className={`text-sm font-medium ${selectedBranch === branch.name ? 'text-primary' : 'text-gray-700'}`}
-                >
-                  {branch.name}
-                </span>
-                {/* <span className={`ml-2 px-1.5 py-0.5 ${statusStyles[branch.status].bg} ${statusStyles[branch.status].text} text-xs rounded-full ${branch.status === '活跃' ? 'badge-pulse' : ''}`}>{branch.status}</span> */}
-              </div>
-              <div className="flex items-center">
-                <span className="text-xs text-gray-500 mr-2">
+              selected={selectedBranch === branch.name}
+              actions={[
+                <Text type="secondary" key="version">
                   {branch.versions} 版本
-                </span>
-                <button
-                  className="p-1.5 rounded hover:bg-gray-100 transition-colors"
+                </Text>,
+                <Button
+                  key="favorite"
+                  type="text"
+                  icon={
+                    branch.favorite ? (
+                      <StarFilled style={{ color: '#faad14' }} />
+                    ) : (
+                      <StarOutlined />
+                    )
+                  }
                   onClick={(e) => {
                     e.stopPropagation();
                     onToggleFavorite(projectId, branch.name);
                   }}
-                >
-                  <i
-                    className={`fa ${branch.favorite ? 'fa-star text-yellow-400' : 'fa-star-o text-gray-500'} text-xs ${branch.favorite ? 'star-animate' : ''}`}
-                  ></i>
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+                />,
+              ]}
+            >
+              <List.Item.Meta
+                avatar={
+                  <div
+                    style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: '50%',
+                      backgroundColor:
+                        selectedBranch === branch.name ? '#1890ff' : '#f0f0f0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginRight: 12,
+                    }}
+                  >
+                    <BranchesOutlined
+                      style={{
+                        fontSize: 12,
+                        color:
+                          selectedBranch === branch.name ? '#fff' : '#8c8c8c',
+                      }}
+                    />
+                  </div>
+                }
+                title={
+                  <Space>
+                    <Text
+                      strong={selectedBranch === branch.name}
+                      style={{
+                        color:
+                          selectedBranch === branch.name
+                            ? '#1890ff'
+                            : 'inherit',
+                      }}
+                    >
+                      {branch.name}
+                    </Text>
+                    {branch.status && (
+                      <Tag color={statusStyles[branch.status].bg.replace('bg-','')} size="small">
+                        {branch.status}
+                      </Tag>
+                    )}
+                  </Space>
+                }
+              />
+            </List.Item>
+          )}
+        />
       )}
-    </div>
+    </Card>
   );
 };
 

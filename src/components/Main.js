@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Layout, Spin, Alert } from 'antd';
 import ProjectList from './ProjectList';
 import BranchAndVersionPanel from './BranchAndVersionPanel';
-import LoadingSpinner from './LoadingSpinner';
-import ErrorMessage from './ErrorMessage';
+
+const { Content } = Layout;
 
 const Main = ({ 
   projects, 
@@ -16,20 +17,33 @@ const Main = ({
   onBranchSelect, 
   onToggleFavorite,
   onViewChange,
-  loading,
+  loading, 
   error 
 }) => {
   const [viewType, setViewType] = useState('all');
+
   if (loading) {
-    return <LoadingSpinner />;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin size="large" tip="加载中..." />
+      </div>
+    );
   }
 
   if (error) {
-    return <ErrorMessage message={error} />;
+    return (
+      <Alert
+        message="加载错误"
+        description={error}
+        type="error"
+        showIcon
+        style={{ margin: '20px' }}
+      />
+    );
   }
 
   return (
-    <main className="flex flex-1 overflow-hidden">
+    <Layout style={{ display: 'flex', height: '100vh' }}>
       <ProjectList 
         projects={projects} 
         selectedProjectId={selectedProjectId}
@@ -42,15 +56,17 @@ const Main = ({
           onViewChange(type);
         }}
       />
-      <BranchAndVersionPanel 
-        selectedProject={projects.find(p => p.id === selectedProjectId)}
-        branches={branches}
-        selectedBranch={selectedBranch}
-        onBranchSelect={onBranchSelect}
-        onToggleFavorite={onToggleFavorite}
-        versions={versions}
-      />
-    </main>
+      <Content style={{ flex: 1, overflow: 'auto', padding: '24px' }}>
+        <BranchAndVersionPanel 
+          selectedProject={projects.find(p => p.id === selectedProjectId)}
+          branches={branches}
+          selectedBranch={selectedBranch}
+          onBranchSelect={onBranchSelect}
+          onToggleFavorite={onToggleFavorite}
+          versions={versions}
+        />
+      </Content>
+    </Layout>
   );
 };
 

@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { Card, Button, Layout, Spin, Alert, Typography, Space, Row, Col } from 'antd';
+import { PlusOutlined, BranchesOutlined, LoadingOutlined } from '@ant-design/icons';
 import BranchList from "./BranchList";
 import VersionHistory from "./VersionHistory";
 import { fetchProjectBranches, fetchBranchVersions, toggleFavorite } from "../api";
+
+const { Content, Sider } = Layout;
+const { Title, Text } = Typography;
 
 const BranchAndVersionPanel = ({ selectedProject }) => {
   const [branches, setBranches] = useState([]);
@@ -62,57 +67,68 @@ const BranchAndVersionPanel = ({ selectedProject }) => {
       )
     );
   };
+
+  if (!selectedProject) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', backgroundColor: '#f5f5f5' }}>
+        <Text type="secondary">请选择一个项目</Text>
+      </div>
+    );
+  }
+
   return (
-    <section className="flex-1 flex flex-col overflow-hidden bg-gray-50">
-      <div className="p-4 bg-white border-b border-gray-200 shadow-sm">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-          <div>
-            <h2 className="text-lg font-semibold text-gray-800">
-              {selectedProject.name || "选择一个项目"}
-            </h2>
-            <div className="flex items-center mt-1 text-sm">
-              <span className="text-gray-500">项目 ID:</span>
-              <span className="ml-1 text-gray-700 font-medium">
-                PRJ-{selectedProject.id?.toUpperCase() || "0000"}
-              </span>
-              <span className="mx-2 text-gray-300">|</span>
-              <span className="text-gray-500">最后更新:</span>
-              <span className="ml-1 text-gray-700">2023-06-25 14:30</span>
+    <Layout style={{ height: '100%' }}>
+      <Content style={{ padding: '0', margin: 0, backgroundColor: '#f5f5f5' }}>
+        <Card bordered={false} style={{ marginBottom: 0 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
+            <div>
+              <Title level={4} style={{ margin: 0 }}>{selectedProject.name}</Title>
+              <Space size="middle" style={{ marginTop: 4 }}>
+                <Text type="secondary">项目 ID:</Text>
+                <Text strong>PRJ-{selectedProject.id?.toUpperCase() || "0000"}</Text>
+                <Text type="secondary">最后更新:</Text>
+                <Text>2023-06-25 14:30</Text>
+              </Space>
             </div>
+            <Space size="small" style={{ marginTop: 16 }}>
+              <Button icon={<PlusOutlined />} size="middle">新建分支</Button>
+              <Button type="primary" icon={<BranchesOutlined />} size="middle">检出代码</Button>
+            </Space>
           </div>
+        </Card>
 
-          <div className="flex mt-3 md:mt-0 space-x-2">
-            <button className="px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors flex items-center">
-              <i className="fa fa-plus mr-1.5"></i> 新建分支
-            </button>
-            <button className="px-3 py-1.5 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors flex items-center">
-              <i className="fa fa-code-fork mr-1.5"></i> 检出代码
-            </button>
+        {loading && (
+          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }}>
+            <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} tip="加载中..." />
           </div>
-        </div>
-      </div>
+        )}
 
-      {loading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-50 z-50">
-          <div className="text-gray-600">加载中...</div>
-        </div>
-      )}
-      {error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-50 z-50">
-          <div className="text-red-500">{error}</div>
-        </div>
-      )}
-      <div className="flex-1 flex overflow-hidden">
-        <BranchList
-          branches={branches}
-          selectedBranch={selectedBranch}
-          projectId={selectedProject?.id}
-          onBranchSelect={onBranchSelect}
-          onToggleFavorite={onToggleFavorite}
-        />
-        <VersionHistory versions={versions} branchName={selectedBranch}/>
-      </div>
-    </section>
+        {error && (
+          <Alert
+            message="错误"
+            description={error}
+            type="error"
+            showIcon
+            style={{ margin: '16px' }}
+          />
+        )}
+
+        <Layout style={{ height: 'calc(100% - 78px)' }}>
+          <Sider width={300} theme="light" style={{ borderRight: '1px solid #e8e8e8' }}>
+            <BranchList
+              branches={branches}
+              selectedBranch={selectedBranch}
+              projectId={selectedProject?.id}
+              onBranchSelect={onBranchSelect}
+              onToggleFavorite={onToggleFavorite}
+            />
+          </Sider>
+          <Content style={{ padding: '16px', overflow: 'auto' }}>
+            <VersionHistory versions={versions} branchName={selectedBranch}/>
+          </Content>
+        </Layout>
+      </Content>
+    </Layout>
   );
 };
 
