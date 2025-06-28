@@ -7,16 +7,10 @@ const BranchList = ({
   selectedBranch,
   projectId,
   onBranchSelect,
-  onToggleFavorite,
-  onFilterBranch,
-  onCreateBranch,
-  onRefreshBranches,
-  onExportBranches,
-  onCleanupBranches
+  onToggleFavorite
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterMenuOpen, setFilterMenuOpen] = useState(false);
-  const [moreMenuOpen, setMoreMenuOpen] = useState(false);
+  const [sortMenuOpen, setSortMenuOpen] = useState(false);
   const [sortBy, setSortBy] = useState('name'); // 排序字段: name, versions
   const [sortOrder, setSortOrder] = useState('asc'); // 排序顺序: asc, desc
 
@@ -42,9 +36,13 @@ const BranchList = ({
   }, [filteredBranches, sortBy, sortOrder]);
 
   // 获取排序图标
-  const getSortIcon = (field) => {
-    if (sortBy !== field) return null;
-    return sortOrder === 'asc' ? 'fa-sort-asc' : 'fa-sort-desc';
+  const getSortIcon = () => {
+    if (sortBy === 'name') {
+      return sortOrder === 'asc' ? 'fa-sort-alpha-asc' : 'fa-sort-alpha-desc';
+    } else if (sortBy === 'versions') {
+      return sortOrder === 'asc' ? 'fa-sort-numeric-asc' : 'fa-sort-numeric-desc';
+    }
+    return 'fa-sort';
   };
 
   return (
@@ -52,139 +50,43 @@ const BranchList = ({
       <div className="p-3 border-b border-gray-100 flex items-center justify-between">
         <h3 className="text-sm font-medium text-gray-700">分支列表</h3>
         <div className="flex items-center space-x-2">
-          {/* 过滤器和排序按钮 */}
+          {/* 排序按钮 - 与项目排序下拉框样式统一 */}
           <div className="relative">
             <button 
-              className="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-500"
-              onClick={() => setFilterMenuOpen(!filterMenuOpen)}
+              onClick={() => setSortMenuOpen(!sortMenuOpen)}
+              className="px-3 py-1 rounded-md bg-gray-100 hover:bg-gray-200 flex items-center space-x-1 text-sm"
             >
-              <i className="fa fa-filter text-xs"></i>
+              <i className={`fa ${getSortIcon()} text-xs mr-1`}></i>
+              <span>排序</span>
             </button>
-            {/* 过滤器和排序下拉菜单 */}
-            {filterMenuOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-20">
-                <div className="p-2 border-b border-gray-100 font-medium text-sm">分支过滤</div>
-                <div className="py-1">
-                  <button 
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => {
-                      onFilterBranch && onFilterBranch('all');
-                      setFilterMenuOpen(false);
-                    }}
-                  >
-                    所有分支
-                  </button>
-                  <button 
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => {
-                      onFilterBranch && onFilterBranch('active');
-                      setFilterMenuOpen(false);
-                    }}
-                  >
-                    活跃分支
-                  </button>
-                  <button 
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => {
-                      onFilterBranch && onFilterBranch('merged');
-                      setFilterMenuOpen(false);
-                    }}
-                  >
-                    已合并分支
-                  </button>
-                  <button 
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => {
-                      onFilterBranch && onFilterBranch('closed');
-                      setFilterMenuOpen(false);
-                    }}
-                  >
-                    已关闭分支
-                  </button>
-                </div>
-                <div className="border-t border-gray-100 my-1"></div>
-                <div className="p-2 font-medium text-sm text-gray-500">排序方式</div>
-                <div className="py-1">
-                  <button 
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => {
-                      setSortBy('name');
-                      setSortOrder(sortBy === 'name' && sortOrder === 'asc' ? 'desc' : 'asc');
-                      setFilterMenuOpen(false);
-                    }}
-                  >
-                    <span className="flex items-center justify-between w-full">
-                      <span>名称</span>
-                      <i className={`fa ${getSortIcon('name')} text-xs`}></i>
-                    </span>
-                  </button>
-                  <button 
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => {
-                      setSortBy('versions');
-                      setSortOrder(sortBy === 'versions' && sortOrder === 'asc' ? 'desc' : 'asc');
-                      setFilterMenuOpen(false);
-                    }}
-                  >
-                    <span className="flex items-center justify-between w-full">
-                      <span>版本数量</span>
-                      <i className={`fa ${getSortIcon('versions')} text-xs`}></i>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-          {/* 更多选项按钮 */}
-          <div className="relative">
-            <button 
-              className="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-500"
-              onClick={() => setMoreMenuOpen(!moreMenuOpen)}
-            >
-              <i className="fa fa-ellipsis-v text-xs"></i>
-            </button>
-            {/* 更多选项下拉菜单 */}
-            {moreMenuOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-20">
-                <div className="py-1">
-                  <button 
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => {
-                      onCreateBranch && onCreateBranch();
-                      setMoreMenuOpen(false);
-                    }}
-                  >
-                    <i className="fa fa-plus mr-2 text-xs"></i> 创建分支
-                  </button>
-                  <button 
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => {
-                      onRefreshBranches && onRefreshBranches();
-                      setMoreMenuOpen(false);
-                    }}
-                  >
-                    <i className="fa fa-refresh mr-2 text-xs"></i> 刷新列表
-                  </button>
-                  <button 
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => {
-                      onExportBranches && onExportBranches();
-                      setMoreMenuOpen(false);
-                    }}
-                  >
-                    <i className="fa fa-download mr-2 text-xs"></i> 导出分支信息
-                  </button>
-                  <div className="border-t border-gray-100 my-1"></div>
-                  <button 
-                    className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                    onClick={() => {
-                      onCleanupBranches && onCleanupBranches();
-                      setMoreMenuOpen(false);
-                    }}
-                  >
-                    <i className="fa fa-trash mr-2 text-xs"></i> 清理无效分支
-                  </button>
-                </div>
+            {/* 排序下拉菜单 */}
+            {sortMenuOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 border border-gray-200">
+                <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">排序方式</div>
+                <button
+                  onClick={() => {
+                    setSortBy('name');
+                    setSortOrder(sortBy === 'name' && sortOrder === 'asc' ? 'desc' : 'asc');
+                    setSortMenuOpen(false);
+                  }}
+                  className={`block w-full text-left px-4 py-2 text-sm ${sortBy === 'name' ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-100'}`}
+                >
+                  名称 {sortBy === 'name' && (
+                    <span className="ml-2">{sortOrder === 'asc' ? '↑' : '↓'}</span>
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    setSortBy('versions');
+                    setSortOrder(sortBy === 'versions' && sortOrder === 'asc' ? 'desc' : 'asc');
+                    setSortMenuOpen(false);
+                  }}
+                  className={`block w-full text-left px-4 py-2 text-sm ${sortBy === 'versions' ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-100'}`}
+                >
+                  版本数量 {sortBy === 'versions' && (
+                    <span className="ml-2">{sortOrder === 'asc' ? '↑' : '↓'}</span>
+                  )}
+                </button>
               </div>
             )}
           </div>
@@ -263,12 +165,7 @@ BranchList.propTypes = {
   selectedBranch: PropTypes.string,
   projectId: PropTypes.string,
   onBranchSelect: PropTypes.func.isRequired,
-  onToggleFavorite: PropTypes.func.isRequired,
-  onFilterBranch: PropTypes.func,
-  onCreateBranch: PropTypes.func,
-  onRefreshBranches: PropTypes.func,
-  onExportBranches: PropTypes.func,
-  onCleanupBranches: PropTypes.func
+  onToggleFavorite: PropTypes.func.isRequired
 };
 
 export default BranchList;
