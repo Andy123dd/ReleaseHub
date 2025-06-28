@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import FavoriteBranches from './FavoriteBranches';
 
-const Header = () => {
+const Header = ({ favorites, onToggleFavorite }) => {
+  const [showFavorites, setShowFavorites] = useState(false);
+
   return (
     <header className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between shadow-sm z-10">
       <div className="flex items-center space-x-4">
@@ -16,6 +19,28 @@ const Header = () => {
         </div>
       </div>
       <div className="flex items-center space-x-4">
+        <div className="relative">
+          <button 
+            className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+            onClick={() => setShowFavorites(!showFavorites)}
+          >
+            <i className="fa fa-star text-yellow-400"></i>
+            {favorites.length > 0 && (
+              <span className="absolute top-0 right-0 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                {favorites.length}
+              </span>
+            )}
+          </button>
+          {showFavorites && (
+            <div className="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-lg border border-gray-200 z-20">
+              <div className="p-2 border-b border-gray-100 font-medium text-sm">我的收藏</div>
+              <FavoriteBranches 
+                favorites={favorites} 
+                onToggleFavorite={onToggleFavorite} 
+              />
+            </div>
+          )}
+        </div>
         <button className="p-2 rounded-full hover:bg-gray-100 transition-colors relative">
           <i className="fa fa-bell-o text-gray-500"></i>
           <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
@@ -30,4 +55,4 @@ const Header = () => {
   );
 };
 
-export default Header;    
+export default Header;

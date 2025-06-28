@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FavoriteBranches from './FavoriteBranches';
 import ProjectCategoryList from './ProjectCategoryList';
 import { projectCategories, statusStyles } from '../api';
 
@@ -13,6 +12,9 @@ const ProjectList = ({
   favorites,
   onViewChange 
 }) => {
+  // 筛选收藏的项目
+  const favoriteProjects = projects.filter(project => project.favorite);
+
   return (
     <section className="w-full md:w-80 lg:w-96 bg-white border-r border-gray-200 flex flex-col overflow-hidden transition-all duration-300">
       <div className="p-4 border-b border-gray-100">
@@ -42,7 +44,7 @@ const ProjectList = ({
           >
             <span className="flex items-center">
               <i className="fa fa-star mr-1.5"></i> 收藏
-              <span className="ml-1.5 px-1.5 py-0.5 bg-yellow-100 text-yellow-700 text-xs rounded-full">{favorites.length}</span>
+              <span className="ml-1.5 px-1.5 py-0.5 bg-yellow-100 text-yellow-700 text-xs rounded-full">{favoriteProjects.length}</span>
             </span>
           </button>
           {/* 其他标签页按钮 */}
@@ -51,9 +53,12 @@ const ProjectList = ({
       
       <div className="overflow-y-auto scrollbar-hide flex-1">
         {viewType === 'favorites' ? (
-          <FavoriteBranches 
-            favorites={favorites} 
-            onToggleFavorite={onToggleFavorite} 
+          <ProjectCategoryList
+            projects={favoriteProjects}
+            selectedProjectId={selectedProjectId}
+            projectCategories={projectCategories}
+            statusStyles={statusStyles}
+            onProjectSelect={onProjectSelect}
           />
         ) : (
           <ProjectCategoryList
