@@ -114,9 +114,9 @@ const ProjectCategoryList = ({
 
   return (
     <div className="overflow-y-auto scrollbar-hide flex-1">
-      <div class="flex items-center justify-between p-3 border-b border-gray-100">
-        <h3 class="text-sm font-medium text-gray-700">项目分类</h3>
-        <div class="flex space-x-2">
+      <div className="flex items-center justify-between p-3 border-b border-gray-100">
+        <h3 className="text-sm font-medium text-gray-700">项目分类</h3>
+        <div className="flex space-x-2">
           <button
             onClick={expandAll}
             className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded"
