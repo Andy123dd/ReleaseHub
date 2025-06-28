@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ProjectList from './ProjectList';
 import BranchAndVersionPanel from './BranchAndVersionPanel';
@@ -19,6 +19,7 @@ const Main = ({
   loading,
   error 
 }) => {
+  const [viewType, setViewType] = useState('all');
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -32,11 +33,14 @@ const Main = ({
       <ProjectList 
         projects={projects} 
         selectedProjectId={selectedProjectId}
-        viewType="all"
+        viewType={viewType}
         onProjectSelect={onProjectSelect}
         onToggleFavorite={onToggleFavorite}
         favorites={favorites}
-        onViewChange={onViewChange}
+        onViewChange={(type) => {
+          setViewType(type);
+          onViewChange(type);
+        }}
       />
       <BranchAndVersionPanel 
         selectedProject={projects.find(p => p.id === selectedProjectId)}
@@ -65,4 +69,4 @@ Main.propTypes = {
   error: PropTypes.string
 };
 
-export default Main;    
+export default Main;
