@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Header from './components/Header';
 import Main from './components/Main';
-import { fetchProjects, fetchProjectBranches, fetchBranchVersions } from './api';
+import {
+  fetchProjects,
+  fetchProjectBranches,
+  fetchBranchVersions,
+} from './api';
 import './App.css';
 
 function App() {
@@ -61,7 +65,10 @@ function App() {
       const loadVersions = async () => {
         try {
           setLoading(true);
-          const response = await fetchBranchVersions(selectedProjectId, selectedBranch);
+          const response = await fetchBranchVersions(
+            selectedProjectId,
+            selectedBranch
+          );
           setVersions(response.data);
         } catch (err) {
           setError(err.message);
@@ -86,37 +93,39 @@ function App() {
 
   // 处理收藏切换
   const handleToggleFavorite = (projectId, branchName) => {
-    const project = projects.find(p => p.id === projectId);
-    let branch = branches.find(b => b.name === branchName);
-    
+    const project = projects.find((p) => p.id === projectId);
+    let branch = branches.find((b) => b.name === branchName);
+
     if (!branch) {
       branch = { name: branchName, status: '活跃' };
     }
-    
+
     // 检查是否已收藏
-    const isFavorite = favorites.some(f => 
-      f.projectId === projectId && f.branch.name === branchName
+    const isFavorite = favorites.some(
+      (f) => f.projectId === projectId && f.branch.name === branchName
     );
-    
+
     if (isFavorite) {
       // 取消收藏
-      setFavorites(favorites.filter(f => 
-        !(f.projectId === projectId && f.branch.name === branchName)
-      ));
+      setFavorites(
+        favorites.filter(
+          (f) => !(f.projectId === projectId && f.branch.name === branchName)
+        )
+      );
     } else {
       // 添加收藏
       setFavorites([...favorites, { projectId, branch }]);
     }
-    
+
     // 更新项目分支的收藏状态
     if (project && branches) {
-      const updatedBranches = branches.map(b => {
+      const updatedBranches = branches.map((b) => {
         if (b.name === branchName) {
           return { ...b, favorite: !b.favorite };
         }
         return b;
       });
-      
+
       setBranches(updatedBranches);
     }
   };
@@ -130,7 +139,7 @@ function App() {
     <Router>
       <div className="flex flex-col h-screen overflow-hidden">
         <Header />
-        <Main 
+        <Main
           projects={projects}
           selectedProjectId={selectedProjectId}
           branches={branches}
@@ -149,4 +158,4 @@ function App() {
   );
 }
 
-export default App;    
+export default App;
