@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ProjectCategoryList from './ProjectCategoryList';
 import { projectCategories, statusStyles } from '../api';
@@ -12,8 +12,18 @@ const ProjectList = ({
   favorites,
   onViewChange 
 }) => {
+  const [searchTerm, setSearchTerm] = useState('');
   // 筛选收藏的项目
   const favoriteProjects = projects.filter(project => project.favorite);
+
+  // 应用搜索过滤
+  const filteredProjects = viewType === 'favorites' 
+    ? favoriteProjects.filter(project => 
+        project.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : projects.filter(project => 
+        project.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
 
   return (
     <section className="w-full md:w-80 lg:w-96 bg-white border-r border-gray-200 flex flex-col overflow-hidden transition-all duration-300">
@@ -23,6 +33,8 @@ const ProjectList = ({
             type="text" 
             placeholder="搜索项目..." 
             className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <i className="fa fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
         </div>
@@ -54,7 +66,7 @@ const ProjectList = ({
       <div className="overflow-y-auto scrollbar-hide flex-1">
         {viewType === 'favorites' ? (
           <ProjectCategoryList
-            projects={favoriteProjects}
+            projects={filteredProjects}
             selectedProjectId={selectedProjectId}
             projectCategories={projectCategories}
             statusStyles={statusStyles}
@@ -62,7 +74,7 @@ const ProjectList = ({
           />
         ) : (
           <ProjectCategoryList
-            projects={projects}
+            projects={filteredProjects}
             selectedProjectId={selectedProjectId}
             projectCategories={projectCategories}
             statusStyles={statusStyles}
