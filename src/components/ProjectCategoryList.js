@@ -23,6 +23,24 @@ const ProjectCategoryList = ({
     setExpandedCategories(initialExpanded);
   }, [projectCategories]);
 
+  // 展开所有分类
+  const expandAll = () => {
+    const allExpanded = {};
+    Object.keys(projectCategories).forEach(category => {
+      allExpanded[category] = true;
+    });
+    setExpandedCategories(allExpanded);
+  };
+
+  // 折叠所有分类
+  const collapseAll = () => {
+    const allCollapsed = {};
+    Object.keys(projectCategories).forEach(category => {
+      allCollapsed[category] = false;
+    });
+    setExpandedCategories(allCollapsed);
+  };
+
   // 处理排序逻辑
   useEffect(() => {
     const sorted = {};
@@ -98,35 +116,46 @@ const ProjectCategoryList = ({
     <div className="overflow-y-auto scrollbar-hide flex-1">
       <div class="flex items-center justify-between p-3 border-b border-gray-100">
         <h3 class="text-sm font-medium text-gray-700">项目分类</h3>
-        <div class="flex items-center space-x-2">
-          <button class="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-500">
-            <i class="fa fa-plus text-xs"></i>
+        <div class="flex space-x-2">
+          <button
+            onClick={expandAll}
+            className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded"
+          >
+            <i className="fa fa-plus-square-o mr-1"></i>展开全部
           </button>
-          <div class="relative">
+          <button
+            onClick={collapseAll}
+            className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded"
+          >
+            <i className="fa fa-minus-square-o mr-1"></i>折叠全部
+          </button>
+          <div className="relative">
             <button
               id="sortButton"
-              class="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-500"
               onClick={() => setDropdownVisible(!dropdownVisible)}
+              className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded"
             >
-              <i class="fa fa-sort text-xs"></i>
+              <i className="fa fa-sort mr-1"></i>排序
             </button>
-            <div
-              id="sortDropdown"
-              class={`absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20 ${dropdownVisible ? '' : 'hidden'}`}
-            >
-              {sortOptions.map(option => (
-                <button
-                  key={option.value}
-                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => {
-                    setSortBy(option.value);
-                    setDropdownVisible(false);
-                  }}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
+            {dropdownVisible && (
+              <div
+                id="sortDropdown"
+                className="absolute right-0 mt-1 w-48 bg-white shadow-lg rounded-md z-10"
+              >
+                {sortOptions.map(option => (
+                  <div
+                    key={option.value}
+                    onClick={() => {
+                      setSortBy(option.value);
+                      setDropdownVisible(false);
+                    }}
+                    className={`px-4 py-2 text-xs cursor-pointer hover:bg-gray-100 ${sortBy === option.value ? 'bg-gray-100 font-medium' : ''}`}
+                  >
+                    {option.label}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
