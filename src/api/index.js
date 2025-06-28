@@ -200,74 +200,109 @@ export const mockBranches = {
       favorite: false,
     },
   ],
+  'database-design': [
+    { name: 'main', status: '活跃', versions: 8, favorite: true },
+    { name: 'schema-v2', status: '开发中', versions: 4, favorite: true },
+    {
+      name: 'bugfix/query-optimize',
+      status: '待审核',
+      versions: 2,
+      favorite: false,
+    },
+  ],
+  'mobile-app': [
+    { name: 'main', status: '活跃', versions: 12, favorite: true },
+    {
+      name: 'feature/push-notification',
+      status: '开发中',
+      versions: 5,
+      favorite: true,
+    },
+    {
+      name: 'hotfix/crash-issue',
+      status: '已发布',
+      versions: 3,
+      favorite: true,
+    },
+    { name: 'develop', status: '测试', versions: 8, favorite: false },
+  ],
+  'cicd-pipeline': [
+    { name: 'main', status: '活跃', versions: 6, favorite: true },
+    {
+      name: 'feature/docker-upgrade',
+      status: '开发中',
+      versions: 3,
+      favorite: false,
+    },
+  ],
 };
 
 // 分支版本数据
 export const mockVersions = {
   'api-service': {
     main: [
-    {
-      id: 1,
-      version: "v1.2.0",
-      date: "2023-06-25 14:30",
-      author: "张明",
-      description: "添加用户认证和授权模块，优化API响应格式",
-      status: "已部署",
-      statusColor: "bg-green-500",
-      statusIcon: "fa-check",
-      tags: [
-        { label: "已部署", color: "bg-green-100 text-green-800" },
-        { label: "生产环境", color: "bg-primary/10 text-primary" },
-        { label: "API", color: "bg-gray-100 text-gray-700" },
-        { label: "安全", color: "bg-gray-100 text-gray-700" },
-      ],
-    },
-    {
-      id: 2,
-      version: "v1.1.0",
-      date: "2023-06-18 09:45",
-      author: "李华",
-      description: "实现订单管理API，优化数据库查询性能",
-      status: "已测试",
-      statusColor: "bg-blue-500",
-      statusIcon: "fa-code",
-      tags: [
-        { label: "已测试", color: "bg-blue-100 text-blue-800" },
-        { label: "预发布环境", color: "bg-primary/10 text-primary" },
-        { label: "API", color: "bg-gray-100 text-gray-700" },
-        { label: "性能", color: "bg-gray-100 text-gray-700" },
-      ],
-    },
-    {
-      id: 3,
-      version: "v1.0.1",
-      date: "2023-06-10 16:20",
-      author: "王强",
-      description: "修复用户注册和登录API的bug，增强输入验证",
-      status: "已测试",
-      statusColor: "bg-blue-500",
-      statusIcon: "fa-code",
-      tags: [
-        { label: "已测试", color: "bg-blue-100 text-blue-800" },
-        { label: "API", color: "bg-gray-100 text-gray-700" },
-        { label: "修复", color: "bg-gray-100 text-gray-700" },
-      ],
-    },
-    {
-      id: 4,
-      version: "v1.0.0",
-      date: "2023-06-01 11:15",
-      author: "赵静",
-      description: "初始版本，实现基本API功能和用户管理",
-      status: "已测试",
-      statusColor: "bg-blue-500",
-      statusIcon: "fa-code",
-      tags: [
-        { label: "已测试", color: "bg-blue-100 text-blue-800" },
-        { label: "API", color: "bg-gray-100 text-gray-700" },
-      ],
-    },
-  ],
+      {
+        id: 1,
+        version: 'v1.2.0',
+        date: '2023-06-25 14:30',
+        author: '张明',
+        description: '添加用户认证和授权模块，优化API响应格式',
+        status: '已部署',
+        statusColor: 'bg-green-500',
+        statusIcon: 'fa-check',
+        tags: [
+          { label: '已部署', color: 'bg-green-100 text-green-800' },
+          { label: '生产环境', color: 'bg-primary/10 text-primary' },
+          { label: 'API', color: 'bg-gray-100 text-gray-700' },
+          { label: '安全', color: 'bg-gray-100 text-gray-700' },
+        ],
+      },
+      {
+        id: 2,
+        version: 'v1.1.0',
+        date: '2023-06-18 09:45',
+        author: '李华',
+        description: '实现订单管理API，优化数据库查询性能',
+        status: '已测试',
+        statusColor: 'bg-blue-500',
+        statusIcon: 'fa-code',
+        tags: [
+          { label: '已测试', color: 'bg-blue-100 text-blue-800' },
+          { label: '预发布环境', color: 'bg-primary/10 text-primary' },
+          { label: 'API', color: 'bg-gray-100 text-gray-700' },
+          { label: '性能', color: 'bg-gray-100 text-gray-700' },
+        ],
+      },
+      {
+        id: 3,
+        version: 'v1.0.1',
+        date: '2023-06-10 16:20',
+        author: '王强',
+        description: '修复用户注册和登录API的bug，增强输入验证',
+        status: '已测试',
+        statusColor: 'bg-blue-500',
+        statusIcon: 'fa-code',
+        tags: [
+          { label: '已测试', color: 'bg-blue-100 text-blue-800' },
+          { label: 'API', color: 'bg-gray-100 text-gray-700' },
+          { label: '修复', color: 'bg-gray-100 text-gray-700' },
+        ],
+      },
+      {
+        id: 4,
+        version: 'v1.0.0',
+        date: '2023-06-01 11:15',
+        author: '赵静',
+        description: '初始版本，实现基本API功能和用户管理',
+        status: '已测试',
+        statusColor: 'bg-blue-500',
+        statusIcon: 'fa-code',
+        tags: [
+          { label: '已测试', color: 'bg-blue-100 text-blue-800' },
+          { label: 'API', color: 'bg-gray-100 text-gray-700' },
+        ],
+      },
+    ],
     // 其他分支版本...
   },
 };
@@ -383,11 +418,11 @@ export const fetchBranchVersions = async (projectId, branchName) => {
 };
 
 // 切换分支收藏状态
- export const toggleFavorite = (projectId, branchName) => {
-   if (mockBranches[projectId]) {
-     const branch = mockBranches[projectId].find(b => b.name === branchName);
-     if (branch) {
-       branch.favorite = !branch.favorite;
-     }
-   }
- };
+export const toggleFavorite = (projectId, branchName) => {
+  if (mockBranches[projectId]) {
+    const branch = mockBranches[projectId].find((b) => b.name === branchName);
+    if (branch) {
+      branch.favorite = !branch.favorite;
+    }
+  }
+};
