@@ -4,18 +4,6 @@ export default function VersionHistory({versions, branchName = 'main'}) {
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="p-3 border-b border-gray-200 flex items-center justify-between bg-white">
           <h3 className="text-sm font-medium text-gray-700">{branchName} 分支版本历史</h3>
-          <div className="flex items-center space-x-2">
-            <div className="relative">
-              <button className="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-500">
-                <i className="fa fa-search text-xs"></i>
-              </button>
-            </div>
-            <div className="relative">
-              <button className="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-500">
-                <i className="fa fa-filter text-xs"></i>
-              </button>
-            </div>
-          </div>
         </div>
         <div className="overflow-y-auto scrollbar-hide flex-1 p-4">
           {/* <!-- 版本时间线 --> */}
