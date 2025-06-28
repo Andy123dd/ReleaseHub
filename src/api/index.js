@@ -146,6 +146,96 @@ export const mockProjects = [
     favorite: false,
     icon: 'fa-chart-line',
   },
+  {
+    id: 'realtime-monitor',
+    name: '实时监控系统',
+    type: '后端',
+    status: '开发中',
+    branches: 4,
+    favorite: false,
+    icon: 'fa-eye',
+  },
+  {
+    id: 'content-management',
+    name: '内容管理平台',
+    type: '前端',
+    status: '活跃',
+    branches: 10,
+    favorite: true,
+    icon: 'fa-file-alt',
+  },
+  {
+    id: 'iot-gateway',
+    name: '物联网网关',
+    type: '后端',
+    status: '测试',
+    branches: 5,
+    favorite: false,
+    icon: 'fa-wifi',
+  },
+  {
+    id: 'game-engine',
+    name: '游戏引擎',
+    type: '前端',
+    status: '计划中',
+    branches: 0,
+    favorite: true,
+    icon: 'fa-gamepad',
+  },
+  {
+    id: 'blockchain-service',
+    name: '区块链服务',
+    type: '后端',
+    status: '开发中',
+    branches: 8,
+    favorite: false,
+    icon: 'fa-link',
+  },
+  {
+    id: 'crm-system',
+    name: '客户关系管理',
+    type: '前端',
+    status: '活跃',
+    branches: 12,
+    favorite: true,
+    icon: 'fa-users',
+  },
+  {
+    id: 'supply-chain',
+    name: '供应链管理',
+    type: '后端',
+    status: '测试',
+    branches: 6,
+    favorite: false,
+    icon: 'fa-truck',
+  },
+  {
+    id: 'ai-model-api',
+    name: 'AI模型API',
+    type: '后端',
+    status: '开发中',
+    branches: 7,
+    favorite: true,
+    icon: 'fa-brain',
+  },
+  {
+    id: 'ecommerce-frontend',
+    name: '电商前端',
+    type: '前端',
+    status: '维护',
+    branches: 9,
+    favorite: false,
+    icon: 'fa-shopping-cart',
+  },
+  {
+    id: 'healthcare-system',
+    name: '医疗系统',
+    type: '后端',
+    status: '计划中',
+    branches: 0,
+    favorite: false,
+    icon: 'fa-heartbeat',
+  },
 ];
 
 // 项目分支数据
@@ -319,6 +409,7 @@ export const statusStyles = {
   已发布: { bg: 'bg-purple-100', text: 'text-purple-800' },
   紧急修复: { bg: 'bg-red-100', text: 'text-red-800' },
   测试: { bg: 'bg-indigo-100', text: 'text-indigo-800' },
+  维护: { bg: 'bg-gray-100', text: 'text-gray-800' },
 };
 
 // 项目分类
@@ -329,12 +420,16 @@ export const projectCategories = {
     'database-design',
     'mobile-app',
     'cicd-pipeline',
+    'content-management',
+    'crm-system'
   ],
   待处理: ['security-audit', 'performance-optimization', 'user-authentication'],
   已归档: ['legacy-api', 'deprecated-module'],
   已暂停: ['microservice-refactor', 'data-analysis-platform'],
-  计划中: ['data-visualization'],
-  测试: ['automation-test', 'performance-test'],
+  计划中: ['data-visualization', 'game-engine', 'healthcare-system'],
+  测试: ['automation-test', 'performance-test', 'iot-gateway', 'supply-chain'],
+  开发中: ['realtime-monitor', 'blockchain-service', 'ai-model-api'],
+  维护: ['ecommerce-frontend']
 };
 
 // 创建API实例
