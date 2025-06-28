@@ -1,9 +1,9 @@
-export default function VersionHistory({versions}) {
+export default function VersionHistory({versions, branchName = 'main'}) {
   return (
     <>
       <div class="flex-1 flex flex-col overflow-hidden">
         <div class="p-3 border-b border-gray-200 flex items-center justify-between bg-white">
-          <h3 class="text-sm font-medium text-gray-700">main 分支版本历史</h3>
+          <h3 class="text-sm font-medium text-gray-700">{branchName} 分支版本历史</h3>
           <div class="flex items-center space-x-2">
             <div class="relative">
               <button class="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-500">

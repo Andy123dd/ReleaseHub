@@ -104,7 +104,7 @@ const BranchAndVersionPanel = ({ selectedProject }) => {
           onBranchSelect={onBranchSelect}
           onToggleFavorite={onToggleFavorite}
         />
-        <VersionHistory versions={versions} />
+        <VersionHistory versions={versions} branchName={selectedBranch}/>
       </div>
     </section>
   );
