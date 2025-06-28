@@ -1,72 +1,114 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { statusStyles } from '../api';
-
-const BranchList = ({ branches, selectedBranch, projectId, onBranchSelect, onToggleFavorite }) => {
+export default function BranchList()
+{
   return (
-    <div className="w-full md:w-64 lg:w-72 bg-white border-r border-gray-200 flex flex-col overflow-hidden">
-      <div className="p-3 border-b border-gray-100 flex items-center justify-between">
-        <h3 className="text-sm font-medium text-gray-700">分支列表</h3>
-        <div className="flex items-center space-x-2">
-          <div className="relative">
-            <button className="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-500">
-              <i className="fa fa-filter text-xs"></i>
-            </button>
-          </div>
-          <button className="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-500">
-            <i className="fa fa-ellipsis-v text-xs"></i>
-          </button>
-        </div>
-      </div>
-      
-      {branches.length === 0 ? (
-        <div className="p-4 text-center text-gray-500 text-sm">
-          <div className="mb-2">
-            <i className="fa fa-code-fork text-primary text-3xl"></i>
-          </div>
-          <p>该项目暂无分支</p>
-        </div>
-      ) : (
-        <div className="overflow-y-auto scrollbar-hide flex-1">
-          {branches.map(branch => (
-            <div 
-              key={branch.name} 
-              className={`p-3 flex items-center justify-between ${selectedBranch === branch.name ? 'bg-primary/5 border-l-2 border-primary' : 'hover:bg-gray-50'} cursor-pointer hover-scale`}
-              onClick={() => onBranchSelect(branch.name)}
-            >
-              <div className="flex items-center">
-                <div className={`w-5 h-5 rounded-full ${selectedBranch === branch.name ? 'bg-primary' : 'bg-gray-200'} flex items-center justify-center mr-2`}>
-                  <i className={`fa fa-code-fork ${selectedBranch === branch.name ? 'text-white' : 'text-gray-600'} text-xs`}></i>
+    <>
+    <div class="w-full md:w-64 lg:w-72 bg-white border-r border-gray-200 flex flex-col overflow-hidden">
+                    <div class="p-3 border-b border-gray-100 flex items-center justify-between">
+                        <h3 class="text-sm font-medium text-gray-700">分支列表</h3>
+                        <div class="flex items-center space-x-2">
+                            <div class="relative">
+                                <button class="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-500">
+                                    <i class="fa fa-search text-xs"></i>
+                                </button>
+                            </div>
+                            <div class="relative">
+                                <button class="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-500">
+                                    <i class="fa fa-filter text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-y-auto scrollbar-hide flex-1">
+                        <div class="p-3 flex items-center justify-between bg-primary/5 border-l-2 border-primary cursor-pointer">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center mr-2">
+                                    <i class="fa fa-code-fork text-white text-xs"></i>
+                                </div>
+                                <span class="text-sm font-medium text-primary">main</span>
+                                <span class="ml-2 px-1.5 py-0.5 bg-green-100 text-green-800 text-xs rounded-full badge-pulse">活跃</span>
+                            </div>
+                            <span class="text-xs text-gray-500">12 版本</span>
+                        </div>
+                        
+                        <div class="p-3 flex items-center justify-between hover:bg-gray-50 cursor-pointer hover-scale">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center mr-2">
+                                    <i class="fa fa-code-fork text-gray-600 text-xs"></i>
+                                </div>
+                                <span class="text-sm font-medium text-gray-700">develop</span>
+                                <span class="ml-2 px-1.5 py-0.5 bg-green-100 text-green-800 text-xs rounded-full">活跃</span>
+                            </div>
+                            <span class="text-xs text-gray-500">8 版本</span>
+                        </div>
+                        
+                        <div class="p-3 flex items-center justify-between hover:bg-gray-50 cursor-pointer hover-scale">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center mr-2">
+                                    <i class="fa fa-code-fork text-gray-600 text-xs"></i>
+                                </div>
+                                <span class="text-sm font-medium text-gray-700">feature/auth</span>
+                                <span class="ml-2 px-1.5 py-0.5 bg-blue-100 text-blue-800 text-xs rounded-full">开发中</span>
+                            </div>
+                            <span class="text-xs text-gray-500">5 版本</span>
+                        </div>
+                        
+                        <div class="p-3 flex items-center justify-between hover:bg-gray-50 cursor-pointer hover-scale">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center mr-2">
+                                    <i class="fa fa-code-fork text-gray-600 text-xs"></i>
+                                </div>
+                                <span class="text-sm font-medium text-gray-700">bugfix/501</span>
+                                <span class="ml-2 px-1.5 py-0.5 bg-yellow-100 text-yellow-800 text-xs rounded-full">待审核</span>
+                            </div>
+                            <span class="text-xs text-gray-500">3 版本</span>
+                        </div>
+                        
+                        <div class="p-3 flex items-center justify-between hover:bg-gray-50 cursor-pointer hover-scale">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center mr-2">
+                                    <i class="fa fa-code-fork text-gray-600 text-xs"></i>
+                                </div>
+                                <span class="text-sm font-medium text-gray-700">release/v1.2</span>
+                                <span class="ml-2 px-1.5 py-0.5 bg-purple-100 text-purple-800 text-xs rounded-full">预发布</span>
+                            </div>
+                            <span class="text-xs text-gray-500">2 版本</span>
+                        </div>
+                        
+                        <div class="p-3 flex items-center justify-between hover:bg-gray-50 cursor-pointer hover-scale">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center mr-2">
+                                    <i class="fa fa-code-fork text-gray-600 text-xs"></i>
+                                </div>
+                                <span class="text-sm font-medium text-gray-700">feature/payment</span>
+                                <span class="ml-2 px-1.5 py-0.5 bg-blue-100 text-blue-800 text-xs rounded-full">开发中</span>
+                            </div>
+                            <span class="text-xs text-gray-500">4 版本</span>
+                        </div>
+                        
+                        <div class="p-3 flex items-center justify-between hover:bg-gray-50 cursor-pointer hover-scale">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center mr-2">
+                                    <i class="fa fa-code-fork text-gray-600 text-xs"></i>
+                                </div>
+                                <span class="text-sm font-medium text-gray-700">hotfix/404</span>
+                                <span class="ml-2 px-1.5 py-0.5 bg-red-100 text-red-800 text-xs rounded-full">紧急修复</span>
+                            </div>
+                            <span class="text-xs text-gray-500">1 版本</span>
+                        </div>
+                        
+                        <div class="p-3 flex items-center justify-between hover:bg-gray-50 cursor-pointer hover-scale">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center mr-2">
+                                    <i class="fa fa-code-fork text-gray-600 text-xs"></i>
+                                </div>
+                                <span class="text-sm font-medium text-gray-700">feature/docs</span>
+                                <span class="ml-2 px-1.5 py-0.5 bg-blue-100 text-blue-800 text-xs rounded-full">开发中</span>
+                            </div>
+                            <span class="text-xs text-gray-500">2 版本</span>
+                        </div>
+                    </div>
                 </div>
-                <span className={`text-sm font-medium ${selectedBranch === branch.name ? 'text-primary' : 'text-gray-700'}`}>{branch.name}</span>
-                <span className={`ml-2 px-1.5 py-0.5 ${statusStyles[branch.status].bg} ${statusStyles[branch.status].text} text-xs rounded-full ${branch.status === '活跃' ? 'badge-pulse' : ''}`}>{branch.status}</span>
-              </div>
-              <div className="flex items-center">
-                <span className="text-xs text-gray-500 mr-2">{branch.versions} 版本</span>
-                <button 
-                  className="p-1.5 rounded hover:bg-gray-100 transition-colors"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onToggleFavorite(projectId, branch.name);
-                  }}
-                >
-                  <i className={`fa ${branch.favorite ? 'fa-star text-yellow-400' : 'fa-star-o text-gray-500'} text-xs ${branch.favorite ? 'star-animate' : ''}`}></i>
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
-
-BranchList.propTypes = {
-  branches: PropTypes.array.isRequired,
-  selectedBranch: PropTypes.string,
-  projectId: PropTypes.string,
-  onBranchSelect: PropTypes.func.isRequired,
-  onToggleFavorite: PropTypes.func.isRequired
-};
-
-export default BranchList;    
+    </>
+  )
+}
