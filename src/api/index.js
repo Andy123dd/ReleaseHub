@@ -29,6 +29,33 @@ export const mockProjects = [
     icon: 'fa-server',
     selected: true
   },
+  {
+    id: 'automation-test',
+    name: '自动化测试工具',
+    type: '测试',
+    status: '测试',
+    branches: 5,
+    favorite: false,
+    icon: 'fa-flask'
+  },
+  {
+    id: 'performance-test',
+    name: '性能测试套件',
+    type: '测试',
+    status: '测试',
+    branches: 3,
+    favorite: false,
+    icon: 'fa-tachometer'
+  },
+  {
+    id: 'data-visualization',
+    name: '数据可视化平台',
+    type: '前端',
+    status: '计划中',
+    branches: 0,
+    favorite: true,
+    icon: 'fa-bar-chart'
+  },
   // 其他项目...
 ];
 
@@ -40,6 +67,21 @@ export const mockBranches = {
     { name: 'feature/auth', status: '开发中', versions: 5, favorite: true },
     { name: 'bugfix/501', status: '待审核', versions: 3, favorite: false },
     // 其他分支...
+  ],
+  'automation-test': [
+    { name: 'main', status: '活跃', versions: 8, favorite: true },
+    { name: 'develop', status: '测试', versions: 5, favorite: false },
+    { name: 'feature/new-test', status: '开发中', versions: 3, favorite: true },
+    { name: 'bugfix/test-issue', status: '待审核', versions: 2, favorite: false }
+  ],
+  'performance-test': [
+    { name: 'main', status: '活跃', versions: 6, favorite: true },
+    { name: 'benchmark', status: '测试', versions: 4, favorite: false },
+    { name: 'optimize/load-time', status: '开发中', versions: 3, favorite: true }
+  ],
+  'data-visualization': [
+    { name: 'main', status: '计划中', versions: 0, favorite: false },
+    { name: 'prototype', status: '开发中', versions: 2, favorite: true }
   ],
   // 其他项目分支...
 };
@@ -86,7 +128,8 @@ export const statusStyles = {
   '开发中': { bg: 'bg-blue-100', text: 'text-blue-800' },
   '待审核': { bg: 'bg-yellow-100', text: 'text-yellow-800' },
   '已发布': { bg: 'bg-purple-100', text: 'text-purple-800' },
-  '紧急修复': { bg: 'bg-red-100', text: 'text-red-800' }
+  '紧急修复': { bg: 'bg-red-100', text: 'text-red-800' },
+  '测试': { bg: 'bg-indigo-100', text: 'text-indigo-800' }
 };
 
 // 项目分类
@@ -95,7 +138,8 @@ export const projectCategories = {
   '待处理': ['security-audit', 'performance-optimization', 'user-authentication'],
   '已归档': ['legacy-api', 'deprecated-module'],
   '已暂停': ['microservice-refactor', 'data-analysis-platform'],
-  '计划中': []
+  '计划中': ['data-visualization'],
+  '测试': ['automation-test', 'performance-test']
 };
 
 // 创建API实例
