@@ -1,8 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import BranchList from './BranchList';
 import VersionHistory from './VersionHistory';
+import { fetchProjectBranches, fetchBranchVersions } from '../api';
 
-const BranchAndVersionPanel = ({ selectedProject, selectedBranch, onBranchSelect, onToggleFavorite, versionHistory }) => {
+const BranchAndVersionPanel = ({ selectedProject }) => {
+  const [branches, setBranches] = useState([]);
+  const [selectedBranch, setSelectedBranch] = useState('');
+  const [versions, setVersions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadBranches = async () => {
+      if (!selectedProject) return;
+      setLoading(true);
+      try {
+        const response = await fetchProjectBranches(selectedProject.id);
+        setBranches(response.data);
+        if (response.data.length > 0) {
+          setSelectedBranch(response.data[0].name);
+        }
+      } catch (err) {
+        setError('获取分支数据失败');
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadBranches();
+  }, [selectedProject]);
+
+  useEffect(() => {
+    const loadVersions = async () => {
+      if (!selectedProject || !selectedBranch) return;
+      setLoading(true);
+      try {
+        const response = await fetchBranchVersions(selectedProject.id, selectedBranch);
+        setVersions(response.data);
+      } catch (err) {
+        setError('获取版本数据失败');
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadVersions();
+  }, [selectedProject, selectedBranch]);
+
+  const onBranchSelect = (branchName) => {
+    setSelectedBranch(branchName);
+  };
+
+  const onToggleFavorite = (branchName) => {
+    // 可根据需求实现收藏功能
+    console.log(`切换分支 ${branchName} 的收藏状态`);
+  };
     return (
         <section className="flex-1 flex flex-col overflow-hidden bg-gray-50">
             <div className="p-4 bg-white border-b border-gray-200 shadow-sm">
@@ -29,16 +79,18 @@ const BranchAndVersionPanel = ({ selectedProject, selectedBranch, onBranchSelect
                 </div>
             </div>
             
+            {loading && <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-50 z-50"><div className="text-gray-600">加载中...</div></div>}
+            {error && <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-50 z-50"><div className="text-red-500">{error}</div></div>}
             <div className="flex-1 flex overflow-hidden">
                 <BranchList 
-                    branches={selectedProject.branchList || []} 
+                    branches={branches} 
                     selectedBranch={selectedBranch}
-                    projectId={selectedProject.id}
+                    projectId={selectedProject?.id}
                     onBranchSelect={onBranchSelect}
                     onToggleFavorite={onToggleFavorite}
                 />
                 <VersionHistory 
-                    versions={versionHistory} 
+                    versions={versions} 
                 />
             </div>
         </section>
