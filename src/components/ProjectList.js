@@ -26,7 +26,7 @@ const ProjectList = ({
       );
 
   return (
-    <section className="w-full md:w-80 lg:w-96 bg-white border-r border-gray-200 flex flex-col overflow-hidden transition-all duration-300">
+    <section className="w-full md:w-72 lg:w-80 bg-white border-r border-gray-200 flex flex-col overflow-hidden transition-all duration-300">
       <div className="p-4 border-b border-gray-100">
         <div className="relative">
           <input 

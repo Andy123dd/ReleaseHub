@@ -121,13 +121,13 @@ const ProjectCategoryList = ({
             onClick={expandAll}
             className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded"
           >
-            <i className="fa fa-plus-square-o mr-1"></i>展开全部
+            <i className="fa fa-plus-square-o mr-1"></i>展开
           </button>
           <button
             onClick={collapseAll}
             className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded"
           >
-            <i className="fa fa-minus-square-o mr-1"></i>折叠全部
+            <i className="fa fa-minus-square-o mr-1"></i>折叠
           </button>
           <div className="relative">
             <button
@@ -171,7 +171,7 @@ const ProjectCategoryList = ({
             >
               <div className="flex items-center">
                 <div className={`w-3 h-3 rounded-full ${statusStyles[category].bg} mr-2`}></div>
-                <span className="text-xs font-medium text-gray-700">{category}项目</span>
+                <span className="text-xs font-medium text-gray-700 max-w-[100px] whitespace-nowrap overflow-hidden text-overflow-ellipsis">{category}项目</span>
                 <span className="ml-2 px-1.5 py-0.5 bg-gray-200 text-gray-700 text-xs rounded-full">{categoryProjects.length}</span>
               </div>
               <i className={`fa ${expandedCategories[category] ? 'fa-angle-down' : 'fa-angle-right'} text-gray-400 text-xs`}></i>

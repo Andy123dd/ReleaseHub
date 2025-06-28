@@ -46,7 +46,7 @@ const BranchList = ({
   };
 
   return (
-    <div className="w-full md:w-64 lg:w-72 bg-white border-r border-gray-200 flex flex-col overflow-hidden">
+    <div className="w-full md:w-72 lg:w-80 bg-white border-r border-gray-200 flex flex-col overflow-hidden">
       <div className="p-3 border-b border-gray-100 flex items-center justify-between">
         <h3 className="text-sm font-medium text-gray-700">分支列表</h3>
         <div className="flex items-center space-x-2">
@@ -131,7 +131,7 @@ const BranchList = ({
                   ></i>
                 </div>
                 <span
-                  className={`text-sm font-medium ${selectedBranch === branch.name ? 'text-primary' : 'text-gray-700'} max-w-[120px] whitespace-nowrap overflow-hidden text-overflow-ellipsis`}
+                  className={`text-sm font-medium ${selectedBranch === branch.name ? 'text-primary' : 'text-gray-700'} max-w-[140px] whitespace-nowrap overflow-hidden text-overflow-ellipsis`}
                 >
                   {branch.name}
                 </span>
