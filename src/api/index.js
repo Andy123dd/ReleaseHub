@@ -4,7 +4,7 @@ import axios from 'axios';
 const API_BASE_URL = 'https://api.example.com';
 
 // 模拟延迟，以显示加载状态
-const simulateDelay = (ms = 800) => {
+const simulateDelay = (ms = 100) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
@@ -206,129 +206,71 @@ export const mockBranches = {
 export const mockVersions = {
   'api-service': {
     main: [
-      {
-        id: '1',
-        version: 'v1.2.0',
-        status: 'deployed',
-        commit: '1a2b3c4d',
-        type: '发布',
-        message: '添加用户认证和授权模块，优化API响应格式',
-        date: '2023-06-25 14:30',
-        author: {
-          name: '张明',
-          avatar: 'https://picsum.photos/id/1005/200/200',
-        },
-        tags: ['已部署', '生产环境', 'API', '安全'],
-      },
-      {
-        id: '2',
-        version: 'v1.1.0',
-        status: 'tested',
-        commit: '5e6f7g8h',
-        type: '功能',
-        message: '实现订单管理API，优化数据库查询性能',
-        date: '2023-06-18 09:45',
-        author: {
-          name: '李华',
-          avatar: 'https://picsum.photos/id/1012/200/200',
-        },
-        tags: ['已测试', '预发布环境', 'API', '性能'],
-      },
-      // 其他版本...
-    ],
+    {
+      id: 1,
+      version: "v1.2.0",
+      date: "2023-06-25 14:30",
+      author: "张明",
+      description: "添加用户认证和授权模块，优化API响应格式",
+      status: "已部署",
+      statusColor: "bg-green-500",
+      statusIcon: "fa-check",
+      tags: [
+        { label: "已部署", color: "bg-green-100 text-green-800" },
+        { label: "生产环境", color: "bg-primary/10 text-primary" },
+        { label: "API", color: "bg-gray-100 text-gray-700" },
+        { label: "安全", color: "bg-gray-100 text-gray-700" },
+      ],
+    },
+    {
+      id: 2,
+      version: "v1.1.0",
+      date: "2023-06-18 09:45",
+      author: "李华",
+      description: "实现订单管理API，优化数据库查询性能",
+      status: "已测试",
+      statusColor: "bg-blue-500",
+      statusIcon: "fa-code",
+      tags: [
+        { label: "已测试", color: "bg-blue-100 text-blue-800" },
+        { label: "预发布环境", color: "bg-primary/10 text-primary" },
+        { label: "API", color: "bg-gray-100 text-gray-700" },
+        { label: "性能", color: "bg-gray-100 text-gray-700" },
+      ],
+    },
+    {
+      id: 3,
+      version: "v1.0.1",
+      date: "2023-06-10 16:20",
+      author: "王强",
+      description: "修复用户注册和登录API的bug，增强输入验证",
+      status: "已测试",
+      statusColor: "bg-blue-500",
+      statusIcon: "fa-code",
+      tags: [
+        { label: "已测试", color: "bg-blue-100 text-blue-800" },
+        { label: "API", color: "bg-gray-100 text-gray-700" },
+        { label: "修复", color: "bg-gray-100 text-gray-700" },
+      ],
+    },
+    {
+      id: 4,
+      version: "v1.0.0",
+      date: "2023-06-01 11:15",
+      author: "赵静",
+      description: "初始版本，实现基本API功能和用户管理",
+      status: "已测试",
+      statusColor: "bg-blue-500",
+      statusIcon: "fa-code",
+      tags: [
+        { label: "已测试", color: "bg-blue-100 text-blue-800" },
+        { label: "API", color: "bg-gray-100 text-gray-700" },
+      ],
+    },
+  ],
     // 其他分支版本...
   },
 };
-
-// 补充分支版本数据
-Object.assign(mockVersions, {
-  'api-service': {
-    'feature/auth': [
-      {
-        id: '5',
-        version: 'v0.5.0',
-        status: 'developing',
-        commit: 'e5f6g7h8',
-        type: '功能',
-        message: '实现JWT认证',
-        date: '2023-06-15 09:20',
-        author: {
-          name: '陈杰',
-          avatar: 'https://picsum.photos/id/1021/200/200',
-        },
-        tags: ['开发中', '安全', '认证'],
-      },
-    ],
-  },
-  'automation-test': {
-    'feature/new-test': [
-      {
-        id: '6',
-        version: 'v0.3.0',
-        status: 'tested',
-        commit: 'f6g7h8i9',
-        type: '功能',
-        message: '添加接口测试用例',
-        date: '2023-06-12 16:10',
-        author: {
-          name: '周婷',
-          avatar: 'https://picsum.photos/id/1022/200/200',
-        },
-        tags: ['已测试', '测试', '接口'],
-      },
-    ],
-  },
-  'performance-test': {
-    'optimize/load-time': [
-      {
-        id: '7',
-        version: 'v0.2.0',
-        status: 'developing',
-        commit: 'g7h8i9j0',
-        type: '优化',
-        message: '优化加载时间测试',
-        date: '2023-06-09 13:55',
-        author: {
-          name: '吴刚',
-          avatar: 'https://picsum.photos/id/1023/200/200',
-        },
-        tags: ['开发中', '性能', '优化'],
-      },
-    ],
-  },
-  'webapp-frontend': {
-    main: [
-      {
-        id: '8',
-        version: 'v2.1.0',
-        status: 'deployed',
-        commit: 'j0k1l2m3',
-        type: '发布',
-        message: '添加用户仪表盘和数据可视化功能',
-        date: '2023-06-28 14:00',
-        author: {
-          name: '李阳',
-          avatar: 'https://picsum.photos/id/1026/200/200',
-        },
-        tags: ['已部署', '生产环境', '前端', 'UI'],
-      },
-      {
-        id: '9',
-        version: 'v2.0.0',
-        status: 'deployed',
-        commit: 'k1l2m3n4',
-        type: '发布',
-        message: 'WebApp前端2.0版本发布',
-        date: '2023-06-25 10:00',
-        author: {
-          name: '张悦',
-          avatar: 'https://picsum.photos/id/1027/200/200',
-        },
-        tags: ['已部署', '生产环境', '前端'],
-      },
-    ],
-  },
-});
 
 // 项目状态样式映射
 export const statusStyles = {
