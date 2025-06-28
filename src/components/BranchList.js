@@ -26,7 +26,6 @@ export default function BranchList()
                                     <i class="fa fa-code-fork text-white text-xs"></i>
                                 </div>
                                 <span class="text-sm font-medium text-primary">main</span>
-                                <span class="ml-2 px-1.5 py-0.5 bg-green-100 text-green-800 text-xs rounded-full badge-pulse">活跃</span>
                             </div>
                             <span class="text-xs text-gray-500">12 版本</span>
                         </div>
@@ -37,7 +36,6 @@ export default function BranchList()
                                     <i class="fa fa-code-fork text-gray-600 text-xs"></i>
                                 </div>
                                 <span class="text-sm font-medium text-gray-700">develop</span>
-                                <span class="ml-2 px-1.5 py-0.5 bg-green-100 text-green-800 text-xs rounded-full">活跃</span>
                             </div>
                             <span class="text-xs text-gray-500">8 版本</span>
                         </div>
@@ -48,7 +46,6 @@ export default function BranchList()
                                     <i class="fa fa-code-fork text-gray-600 text-xs"></i>
                                 </div>
                                 <span class="text-sm font-medium text-gray-700">feature/auth</span>
-                                <span class="ml-2 px-1.5 py-0.5 bg-blue-100 text-blue-800 text-xs rounded-full">开发中</span>
                             </div>
                             <span class="text-xs text-gray-500">5 版本</span>
                         </div>
@@ -59,7 +56,6 @@ export default function BranchList()
                                     <i class="fa fa-code-fork text-gray-600 text-xs"></i>
                                 </div>
                                 <span class="text-sm font-medium text-gray-700">bugfix/501</span>
-                                <span class="ml-2 px-1.5 py-0.5 bg-yellow-100 text-yellow-800 text-xs rounded-full">待审核</span>
                             </div>
                             <span class="text-xs text-gray-500">3 版本</span>
                         </div>
@@ -70,7 +66,6 @@ export default function BranchList()
                                     <i class="fa fa-code-fork text-gray-600 text-xs"></i>
                                 </div>
                                 <span class="text-sm font-medium text-gray-700">release/v1.2</span>
-                                <span class="ml-2 px-1.5 py-0.5 bg-purple-100 text-purple-800 text-xs rounded-full">预发布</span>
                             </div>
                             <span class="text-xs text-gray-500">2 版本</span>
                         </div>
@@ -81,7 +76,6 @@ export default function BranchList()
                                     <i class="fa fa-code-fork text-gray-600 text-xs"></i>
                                 </div>
                                 <span class="text-sm font-medium text-gray-700">feature/payment</span>
-                                <span class="ml-2 px-1.5 py-0.5 bg-blue-100 text-blue-800 text-xs rounded-full">开发中</span>
                             </div>
                             <span class="text-xs text-gray-500">4 版本</span>
                         </div>
@@ -92,7 +86,6 @@ export default function BranchList()
                                     <i class="fa fa-code-fork text-gray-600 text-xs"></i>
                                 </div>
                                 <span class="text-sm font-medium text-gray-700">hotfix/404</span>
-                                <span class="ml-2 px-1.5 py-0.5 bg-red-100 text-red-800 text-xs rounded-full">紧急修复</span>
                             </div>
                             <span class="text-xs text-gray-500">1 版本</span>
                         </div>
@@ -103,7 +96,6 @@ export default function BranchList()
                                     <i class="fa fa-code-fork text-gray-600 text-xs"></i>
                                 </div>
                                 <span class="text-sm font-medium text-gray-700">feature/docs</span>
-                                <span class="ml-2 px-1.5 py-0.5 bg-blue-100 text-blue-800 text-xs rounded-full">开发中</span>
                             </div>
                             <span class="text-xs text-gray-500">2 版本</span>
                         </div>
